@@ -16,6 +16,9 @@
 			if (match.score !== undefined) {
 				document.getElementById('homeGoals').value = match.score[0];
 				document.getElementById('visitorGoals').value = match.score[1];
+			}else{
+				document.getElementById('homeGoals').value = '';
+				document.getElementById('visitorGoals').value = '';
 			}
 		} else {
 			alert("Janela filha rejeita mensagem de " + evt.origin);

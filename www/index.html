@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="utf-8" />
+		<title>My Score - Match</title> 
+        <link href="./styles/estilos.css" rel="stylesheet" type="text/css" />        
+		<script src="./scripts/jquery.min.js"></script>
+		<script src="./scripts/modernizr.min.js"></script>  		
+	</head>
+	<script>
+		function onMessage(evt){
+
+			if (evt.origin == "http://localhost:8081"){
+				document.getElementById("match").innerText = evt.data;				
+			}else{
+				alert("Janela filha rejeita mensagem de " + evt.origin);
+			}
+
+		}
+
+		function saveScore() {
+			let homeGoals = getElementById('homeGoals').value;
+			let visitorGoals = getElementById('visitorGoals').value;
+			let score = [homeGoals, visitorGoals];
+			window.opener.postMessage(JSON.stringify({matchName, score}), "/Matches");
+		}	
+		
+		function setup(){
+			document.getElementById('buttonSaveScore').addEventListener('click', saveScore, true);
+		}
+
+		window.addEventListener("message", onMessage, true);
+
+	</script>
+
+	<body>
+		<h1>Match</h1>
+		 <div>
+			<h2 id="match"></h2>
+		</div>
+		<form id="scoreForm">
+			<label for="home" name="home">Home:</label>
+			<input type="number" id="homeGoals" min="0" placeholder="Enter Home Goals" />
+			<label for="visitor" name="visitor">Visitor:</label>
+			<input type="number" id="visitorGoals" min="0" placeholder="Enter Visitor Goals" />
+			<br />
+			<input type="button" id="buttonSaveScore">
+		</form>
+		
+	</body>
+	
+	
+</html>

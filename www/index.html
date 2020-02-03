@@ -1,53 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt">
-	<head>
-		<meta charset="utf-8" />
-		<title>My Score - Match</title> 
-        <link href="./styles/estilos.css" rel="stylesheet" type="text/css" />        
-		<script src="./scripts/jquery.min.js"></script>
-		<script src="./scripts/modernizr.min.js"></script>  		
-	</head>
-	<script>
-		function onMessage(evt){
 
-			if (evt.origin == "http://localhost:8081"){
-				document.getElementById("match").innerText = evt.data;				
-			}else{
-				alert("Janela filha rejeita mensagem de " + evt.origin);
+<head>
+	<meta charset="utf-8" />
+	<title>My Score - Match</title>
+	<link href="./styles/estilos.css" rel="stylesheet" type="text/css" />
+	<script src="./scripts/jquery.min.js"></script>
+	<script src="./scripts/modernizr.min.js"></script>
+</head>
+<script>
+	function onMessage(evt) {
+		if (evt.origin == "http://localhost:8081") {
+			let match = JSON.parse(evt.data);
+			document.getElementById("match").innerText = match.matchName;
+			if (match.score !== undefined) {
+				document.getElementById('homeGoals').value = match.score[0];
+				document.getElementById('visitorGoals').value = match.score[1];
 			}
-
+		} else {
+			alert("Janela filha rejeita mensagem de " + evt.origin);
 		}
 
-		function saveScore() {
-			let homeGoals = getElementById('homeGoals').value;
-			let visitorGoals = getElementById('visitorGoals').value;
+	}
+
+	function saveScore() {
+		let homeGoals = document.getElementById('homeGoals').value;
+		let visitorGoals = document.getElementById('visitorGoals').value;
+		if (homeGoals >= 0 && visitorGoals >= 0) {
+			let matchName = document.getElementById('match').innerText;
 			let score = [homeGoals, visitorGoals];
-			window.opener.postMessage(JSON.stringify({matchName, score}), "/Matches");
-		}	
-		
-		function setup(){
-			document.getElementById('buttonSaveScore').addEventListener('click', saveScore, true);
+			let result = {
+				matchName,
+				score
+			};
+
+			console.log(result);
+			window.opener.postMessage(JSON.stringify(result), "*");
 		}
+	}
 
-		window.addEventListener("message", onMessage, true);
+	function setup() {
+		document.getElementById('buttonSaveScore').addEventListener('click', saveScore, true);
+	}
 
-	</script>
+	window.addEventListener("message", onMessage, true);
+	window.onload = setup;
+</script>
 
-	<body>
-		<h1>Match</h1>
-		 <div>
-			<h2 id="match"></h2>
-		</div>
-		<form id="scoreForm">
-			<label for="home" name="home">Home:</label>
-			<input type="number" id="homeGoals" min="0" placeholder="Enter Home Goals" />
-			<label for="visitor" name="visitor">Visitor:</label>
-			<input type="number" id="visitorGoals" min="0" placeholder="Enter Visitor Goals" />
-			<br />
-			<input type="button" id="buttonSaveScore">
-		</form>
-		
-	</body>
-	
-	
+<body>
+	<h1>Match</h1>
+	<div>
+		<h2 id="match"></h2>
+	</div>
+	<form id="scoreForm">
+		<label for="home" name="home">Home:</label>
+		<input type="number" id="homeGoals" min="0" placeholder="Enter Home Goals" />
+		<label for="visitor" name="visitor">Visitor:</label>
+		<input type="number" id="visitorGoals" min="0" placeholder="Enter Visitor Goals" />
+		<br />
+		<input type="button" id="buttonSaveScore" value ='Register' />
+	</form>
+
+</body>
+
+
 </html>

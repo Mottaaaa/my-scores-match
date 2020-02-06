@@ -9,9 +9,11 @@
 	<script src="./scripts/modernizr.min.js"></script>
 </head>
 <script>
+	let matchID = '';
 	function onMessage(evt) {
 		if (evt.origin == "http://localhost:8081") {
 			let match = JSON.parse(evt.data);
+			matchID = match.matchID;
 			document.getElementById("match").innerText = match.matchName;
 			if (match.score !== undefined) {
 				document.getElementById('homeGoals').value = match.score[0];
@@ -33,6 +35,7 @@
 			let matchName = document.getElementById('match').innerText;
 			let score = [homeGoals, visitorGoals];
 			let result = {
+				matchID,
 				matchName,
 				score
 			};

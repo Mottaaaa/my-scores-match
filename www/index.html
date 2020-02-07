@@ -7,6 +7,8 @@
 	<link href="./styles/estilos.css" rel="stylesheet" type="text/css" />
 	<script src="./scripts/jquery.min.js"></script>
 	<script src="./scripts/modernizr.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <script>
 	let matchID = '';
@@ -18,7 +20,7 @@
 			if (match.score !== undefined) {
 				document.getElementById('homeGoals').value = match.score[0];
 				document.getElementById('visitorGoals').value = match.score[1];
-			}else{
+			} else {
 				document.getElementById('homeGoals').value = '';
 				document.getElementById('visitorGoals').value = '';
 			}
@@ -54,20 +56,26 @@
 </script>
 
 <body>
-	<h1>Match</h1>
-	<div>
-		<h2 id="match"></h2>
+	<div class='container'>
+		<div class='row d-flex justify-content-center'>
+			<div>
+				<h1>Match</h1>
+			</div>
+			<div>
+				<h2 id="match"></h2>
+			</div>
+		</div>
+		<div class='row d-flex justify-content-center'>
+			<form id="scoreForm">
+				<div class="form-group">
+					<label for="home" name="home">Home:</label>
+					<input type="number" id="homeGoals" min="0" placeholder="Enter Home Goals" />
+					<label for="visitor" name="visitor">Visitor:</label>
+					<input type="number" id="visitorGoals" min="0" placeholder="Enter Visitor Goals" />
+					<input type="button" class='btn btn-primary' id="buttonSaveScore" value='Register' />
+				</div>
+			</form>
+		</div>
 	</div>
-	<form id="scoreForm">
-		<label for="home" name="home">Home:</label>
-		<input type="number" id="homeGoals" min="0" placeholder="Enter Home Goals" />
-		<label for="visitor" name="visitor">Visitor:</label>
-		<input type="number" id="visitorGoals" min="0" placeholder="Enter Visitor Goals" />
-		<br />
-		<input type="button" id="buttonSaveScore" value ='Register' />
-	</form>
-
 </body>
-
-
 </html>
